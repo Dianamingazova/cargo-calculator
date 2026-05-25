@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cargo 60×40</title>
+
+  <style>
+    body{
+      font-family: Arial;
+      background:#f3f4f6;
+      padding:20px;
+    }
+
+    .card{
+      max-width:500px;
+      margin:auto;
+      background:white;
+      padding:25px;
+      border-radius:20px;
+      box-shadow:0 10px 30px rgba(0,0,0,0.1);
+    }
+
+    h1{
+      margin-bottom:10px;
+    }
+
+    input{
+      width:100%;
+      padding:12px;
+      margin-top:5px;
+      margin-bottom:15px;
+      border-radius:12px;
+      border:1px solid #ccc;
+      font-size:16px;
+    }
+
+    .result{
+      background:black;
+      color:white;
+      padding:20px;
+      border-radius:20px;
+      margin-top:20px;
+    }
+
+    .big{
+      font-size:28px;
+      font-weight:bold;
+      margin-top:10px;
+    }
+
+    .info{
+      margin-top:15px;
+      line-height:1.7;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="card">
+
+  <h1>Cargo 60×40</h1>
+  <p>Калькулятор плотности и объемного веса</p>
+
+  <label>Длина (см)</label>
+  <input type="number" id="length" value="40">
+
+  <label>Ширина (см)</label>
+  <input type="number" id="width" value="30">
+
+  <label>Высота (см)</label>
+  <input type="number" id="height" value="20">
+
+  <label>Вес (кг)</label>
+  <input type="number" id="weight" value="12">
+
+  <div class="result">
+
+    <div>Объем:</div>
+    <div class="big" id="volume"></div>
+
+    <div class="info">
+      <div>Объемный вес: <span id="volumeWeight"></span> кг</div>
+      <div>Плотность: <span id="density"></span> кг/м³</div>
+      <div>Курс юаня: 11 ₽</div>
+      <div>Курс доллара: 80 ₽</div>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+
+function calculate(){
+
+  let length = Number(document.getElementById('length').value);
+  let width = Number(document.getElementById('width').value);
+  let height = Number(document.getElementById('height').value);
+  let weight = Number(document.getElementById('weight').value);
+
+  let volumeCm = length * width * height;
+  let volumeM3 = volumeCm / 1000000;
+
+  let volumeWeight = volumeCm / 6000;
+
+  let density = weight / volumeM3;
+
+  document.getElementById('volume').innerText =
+    volumeM3.toFixed(3) + ' м³';
+
+  document.getElementById('volumeWeight').innerText =
+    volumeWeight.toFixed(2);
+
+  document.getElementById('density').innerText =
+    density.toFixed(2);
+
+}
+
+document.querySelectorAll('input').forEach(input=>{
+  input.addEventListener('input', calculate);
+});
+
+calculate();
+
+</script>
+
+</body>
+</html>
