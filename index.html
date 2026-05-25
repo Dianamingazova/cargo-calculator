@@ -13,7 +13,7 @@
     }
 
     .card{
-      max-width:500px;
+      max-width:550px;
       margin:auto;
       background:white;
       padding:25px;
@@ -33,6 +33,7 @@
       border-radius:12px;
       border:1px solid #ccc;
       font-size:16px;
+      box-sizing:border-box;
     }
 
     .result{
@@ -51,7 +52,8 @@
 
     .info{
       margin-top:15px;
-      line-height:1.7;
+      line-height:1.8;
+      font-size:18px;
     }
   </style>
 </head>
@@ -63,25 +65,29 @@
   <h1>Cargo 60×40</h1>
   <p>Калькулятор плотности и объемного веса</p>
 
-  <label>Длина (см)</label>
+  <label>Длина коробки (см)</label>
   <input type="number" id="length" value="40">
 
-  <label>Ширина (см)</label>
+  <label>Ширина коробки (см)</label>
   <input type="number" id="width" value="30">
 
-  <label>Высота (см)</label>
+  <label>Высота коробки (см)</label>
   <input type="number" id="height" value="20">
 
-  <label>Вес (кг)</label>
+  <label>Вес одной коробки (кг)</label>
   <input type="number" id="weight" value="12">
+
+  <label>Количество коробок</label>
+  <input type="number" id="count" value="1">
 
   <div class="result">
 
-    <div>Объем:</div>
+    <div>Общий объем:</div>
     <div class="big" id="volume"></div>
 
     <div class="info">
-      <div>Объемный вес: <span id="volumeWeight"></span> кг</div>
+      <div>Общий вес: <span id="totalWeight"></span> кг</div>
+      <div>Объемный вес: <span id="volumeWeight"></span></div>
       <div>Плотность: <span id="density"></span> кг/м³</div>
       <div>Курс юаня: 11 ₽</div>
       <div>Курс доллара: 80 ₽</div>
@@ -99,22 +105,28 @@ function calculate(){
   let width = Number(document.getElementById('width').value);
   let height = Number(document.getElementById('height').value);
   let weight = Number(document.getElementById('weight').value);
+  let count = Number(document.getElementById('count').value);
 
-  let volumeCm = length * width * height;
+  let totalWeight = weight * count;
+
+  let volumeCm = length * width * height * count;
   let volumeM3 = volumeCm / 1000000;
 
   let volumeWeight = volumeCm / 6000;
 
-  let density = weight / volumeM3;
+  let density = totalWeight / volumeM3;
 
   document.getElementById('volume').innerText =
     volumeM3.toFixed(3) + ' м³';
 
   document.getElementById('volumeWeight').innerText =
-    volumeWeight.toFixed(2);
+    volumeWeight.toFixed(2) + ' кг';
 
   document.getElementById('density').innerText =
     density.toFixed(2);
+
+  document.getElementById('totalWeight').innerText =
+    totalWeight.toFixed(2);
 
 }
 
