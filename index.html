@@ -6,55 +6,91 @@
   <title>Cargo 60×40</title>
 
   <style>
+
     body{
       font-family: Arial;
-      background:#f3f4f6;
+      background: linear-gradient(to bottom, #eaf4ff, #ffffff);
       padding:20px;
+      margin:0;
     }
 
     .card{
-      max-width:550px;
+      max-width:560px;
       margin:auto;
       background:white;
       padding:25px;
-      border-radius:20px;
-      box-shadow:0 10px 30px rgba(0,0,0,0.1);
+      border-radius:28px;
+      box-shadow:0 10px 35px rgba(0,0,0,0.08);
+      border:1px solid #dbeafe;
+    }
+
+    .flags{
+      text-align:center;
+      font-size:38px;
+      margin-bottom:10px;
     }
 
     h1{
       margin-bottom:10px;
+      font-size:34px;
+      color:#1565c0;
+      text-align:center;
+    }
+
+    p{
+      color:#4b5563;
+      line-height:1.6;
+      margin-bottom:25px;
+      text-align:center;
+    }
+
+    label{
+      font-weight:bold;
+      color:#1e3a8a;
     }
 
     input{
       width:100%;
-      padding:12px;
-      margin-top:5px;
-      margin-bottom:15px;
-      border-radius:12px;
-      border:1px solid #ccc;
+      padding:14px;
+      margin-top:6px;
+      margin-bottom:18px;
+      border-radius:14px;
+      border:1px solid #bfdbfe;
       font-size:16px;
       box-sizing:border-box;
+      background:#f8fbff;
     }
 
     .result{
-      background:black;
+      background: linear-gradient(to right, #1565c0, #1e88e5);
       color:white;
-      padding:20px;
-      border-radius:20px;
+      padding:24px;
+      border-radius:24px;
       margin-top:20px;
     }
 
     .big{
-      font-size:28px;
+      font-size:34px;
       font-weight:bold;
       margin-top:10px;
     }
 
     .info{
-      margin-top:15px;
-      line-height:1.8;
+      margin-top:18px;
+      line-height:2;
       font-size:18px;
     }
+
+    .note{
+      margin-top:24px;
+      font-size:15px;
+      line-height:1.7;
+      color:#dbeafe;
+      background:rgba(255,255,255,0.1);
+      padding:15px;
+      border-radius:16px;
+    }
+
   </style>
 </head>
 
@@ -62,8 +98,17 @@
 
 <div class="card">
 
+  <div class="flags">
+    🇨🇳 ➝ 🇷🇺
+  </div>
+
   <h1>Cargo 60×40</h1>
-  <p>Калькулятор плотности товара</p>
+
+  <p>
+    Вводите данные габаритов упаковки вашего товара
+    (спрашивайте у поставщика или находите
+    в карточке товара).
+  </p>
 
   <label>Длина 1 штуки (см)</label>
   <input type="number" id="length" value="20">
@@ -86,11 +131,36 @@
     <div class="big" id="volume"></div>
 
     <div class="info">
-      <div>Общий вес: <span id="totalWeight"></span> кг</div>
-      <div>Объемный вес: <span id="volumeWeight"></span> кг</div>
-      <div>Плотность: <span id="density"></span> кг/м³</div>
-      <div>Курс юаня: 11 ₽</div>
-      <div>Курс доллара: 80 ₽</div>
+
+      <div>
+        Общий вес:
+        <span id="totalWeight"></span> кг
+      </div>
+
+      <div>
+        Объемный вес:
+        <span id="volumeWeight"></span> кг
+      </div>
+
+      <div>
+        Плотность:
+        <span id="density"></span> кг/м³
+      </div>
+
+      <div class="note">
+
+        Для того чтобы рассчитать ставку за кг,
+        вы можете зайти в наш прайс и посмотреть
+        по категории и плотности, либо также
+        можете написать нам в личные сообщения.
+
+        <br><br>
+
+        Товары при плотности меньше 100 кг/м³
+        рассчитываются по кубам, а не по кг.
+
+      </div>
+
     </div>
 
   </div>
@@ -101,23 +171,35 @@
 
 function calculate(){
 
-  let length = Number(document.getElementById('length').value);
-  let width = Number(document.getElementById('width').value);
-  let height = Number(document.getElementById('height').value);
+  let length =
+    Number(document.getElementById('length').value);
 
-  let weightGram = Number(document.getElementById('weight').value);
+  let width =
+    Number(document.getElementById('width').value);
 
-  let count = Number(document.getElementById('count').value);
+  let height =
+    Number(document.getElementById('height').value);
 
-  let totalWeightKg = (weightGram * count) / 1000;
+  let weightGram =
+    Number(document.getElementById('weight').value);
 
-  let volumeCm = length * width * height * count;
+  let count =
+    Number(document.getElementById('count').value);
 
-  let volumeM3 = volumeCm / 1000000;
+  let totalWeightKg =
+    (weightGram * count) / 1000;
 
-  let volumeWeight = volumeCm / 6000;
+  let volumeCm =
+    length * width * height * count;
 
-  let density = totalWeightKg / volumeM3;
+  let volumeM3 =
+    volumeCm / 1000000;
+
+  let volumeWeight =
+    volumeCm / 6000;
+
+  let density =
+    totalWeightKg / volumeM3;
 
   document.getElementById('volume').innerText =
     volumeM3.toFixed(3) + ' м³';
@@ -134,7 +216,9 @@ function calculate(){
 }
 
 document.querySelectorAll('input').forEach(input=>{
+
   input.addEventListener('input', calculate);
+
 });
 
 calculate();
